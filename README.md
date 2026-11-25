@@ -59,10 +59,14 @@ php artisan test
 
 They cover the docs' worked examples (max cost $0.373875, usage $0.169080), signatures and replays, duplicate and out-of-order webhooks, failures being free, holds and blocking, retries and giving up, polling, and the report matching `/v1/usage`.
 
-## Deploy (Laravel Cloud)
+## Deploy
 
-1. Push to GitHub and create the app on Laravel Cloud with a Postgres database.
-2. Environment: `PIXELFORGE_API_KEY` and `PIXELFORGE_WEBHOOK_SECRET` from a **separate** Pixelforge key for production, `ADMIN_EMAILS`, and `QUEUE_CONNECTION=database`.
-3. Enable a **queue worker** and the **scheduler**.
-4. Deploy command: `php artisan migrate --force`.
-5. Set the production key's webhook URL to `https://<your-app>/webhooks/pixelforge`.
+The live demo runs on **Render** (free web service, Docker) with a **Neon** Postgres database. The `Dockerfile` builds the app and assets; `docker/start.sh` runs migrations, then the queue worker, the scheduler and the web server in one container (Render's free plan has no separate workers).
+
+Environment variables: `APP_KEY`, `APP_URL`, `APP_ENV=production`, `APP_DEBUG=false`, `DB_CONNECTION=pgsql`, `DB_URL` (Neon connection string), `QUEUE_CONNECTION=database`, `SESSION_DRIVER=database`, `CACHE_STORE=database`, `PIXELFORGE_API_KEY` and `PIXELFORGE_WEBHOOK_SECRET` from a **separate** Pixelforge key for production, `ADMIN_EMAILS`.
+
+Set that key's webhook URL to `https://<your-app>/webhooks/pixelforge`.
+
+Free-plan caveat: Render puts the service to sleep after 15 minutes without traffic, so the first request takes ~50s. Pixelforge retries webhooks that time out, and `generations:sync` polls anything still in progress, so no generation is lost or billed incorrectly while it sleeps.
+
+On Laravel Cloud (or Forge, ECS...) the same app runs unchanged with a separate queue worker and the scheduler enabled.
