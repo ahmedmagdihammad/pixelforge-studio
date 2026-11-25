@@ -52,7 +52,9 @@ const createdAt = computed(() => new Date(props.generation.created_at).toLocaleS
                 <span class="text-xs text-muted-foreground">{{ createdAt }}</span>
             </div>
             <p class="line-clamp-2" :title="generation.prompt">{{ generation.prompt }}</p>
-            <p class="text-xs text-muted-foreground">{{ generation.size }} · {{ generation.quality }} quality · {{ generation.reference_images.length }} reference image(s)</p>
+            <p class="text-xs text-muted-foreground">
+                {{ generation.size }} · {{ generation.quality }} quality · {{ generation.reference_images.length }} reference image(s)
+            </p>
 
             <dl class="mt-auto grid grid-cols-2 gap-2 border-t pt-2 text-xs">
                 <div>

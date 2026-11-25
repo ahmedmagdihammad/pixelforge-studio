@@ -62,7 +62,7 @@ const refreshEstimate = useDebounceFn(async () => {
         estimateError.value = null;
     } else {
         estimate.value = null;
-        estimateError.value = Object.values(body.errors ?? {}).flat()[0] as string ?? 'Couldn’t estimate the price.';
+        estimateError.value = (Object.values(body.errors ?? {}).flat()[0] as string) ?? 'Couldn’t estimate the price.';
     }
 }, 300);
 
@@ -164,7 +164,9 @@ const promptLength = computed(() => [...form.prompt].length); // characters, not
                                     :key="quality"
                                     :class="[
                                         'cursor-pointer rounded-md border px-3 py-1.5 text-sm capitalize',
-                                        form.quality === quality ? 'border-primary bg-primary text-primary-foreground' : 'border-input hover:bg-accent',
+                                        form.quality === quality
+                                            ? 'border-primary bg-primary text-primary-foreground'
+                                            : 'border-input hover:bg-accent',
                                     ]"
                                 >
                                     <input v-model="form.quality" type="radio" :value="quality" class="sr-only" />
@@ -176,7 +178,9 @@ const promptLength = computed(() => [...form.prompt].length); // characters, not
                     </div>
 
                     <div class="space-y-1.5">
-                        <Label for="references">Reference image URLs <span class="font-normal text-muted-foreground">(optional, one per line, up to 4)</span></Label>
+                        <Label for="references"
+                            >Reference image URLs <span class="font-normal text-muted-foreground">(optional, one per line, up to 4)</span></Label
+                        >
                         <textarea
                             id="references"
                             v-model="form.referenceImagesText"

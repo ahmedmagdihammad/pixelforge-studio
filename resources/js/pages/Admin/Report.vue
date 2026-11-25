@@ -55,7 +55,9 @@ function apply() {
                 </form>
             </div>
 
-            <p v-if="pixelforgeError" class="rounded-lg border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">{{ pixelforgeError }}</p>
+            <p v-if="pixelforgeError" class="rounded-lg border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+                {{ pixelforgeError }}
+            </p>
 
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div class="rounded-xl border p-4">
@@ -127,7 +129,9 @@ function apply() {
                         </thead>
                         <tbody class="font-mono">
                             <tr v-if="byUser.length === 0">
-                                <td colspan="5" class="px-3 py-4 text-center font-sans text-muted-foreground">No succeeded generations in this range.</td>
+                                <td colspan="5" class="px-3 py-4 text-center font-sans text-muted-foreground">
+                                    No succeeded generations in this range.
+                                </td>
                             </tr>
                             <tr v-for="row in byUser" :key="row.user" class="border-t">
                                 <td class="px-3 py-1.5 font-sans">{{ row.user }}</td>
@@ -157,7 +161,9 @@ function apply() {
                         </thead>
                         <tbody class="font-mono">
                             <tr v-if="byDayAndUser.length === 0">
-                                <td colspan="6" class="px-3 py-4 text-center font-sans text-muted-foreground">No succeeded generations in this range.</td>
+                                <td colspan="6" class="px-3 py-4 text-center font-sans text-muted-foreground">
+                                    No succeeded generations in this range.
+                                </td>
                             </tr>
                             <tr v-for="row in byDayAndUser" :key="row.date + row.user" class="border-t">
                                 <td class="px-3 py-1.5 font-sans">{{ row.date }}</td>
